@@ -33,12 +33,19 @@ Bugsnag::Railtie
 </ol>
 <div class='parent'>
 Superclass:
-<strong>Bugsnag::Rails::Railtie</strong>
+<strong>Rails::Railtie</strong>
 </div>
 </div>
 <div id='content'>
 <div id='text'>
 <div id='description'></div>
+<div id='method-list'>
+<h2>Methods</h2>
+<h3>Public Instance</h3>
+<ol>
+<li><a href="#method-i-event_subscription">event_subscription</a></li>
+</ol>
+</div>
 <div id='context'>
 <div id='includes'>
 <h2>Included modules</h2>
@@ -69,6 +76,30 @@ Superclass:
 <td class='context-item-desc'></td>
 </tr>
 </table>
+</div>
+</div>
+<div id='methods'>
+<h2>Public Instance methods</h2>
+<div class='method public-instance' id='method-method-i-event_subscription'>
+<a name='method-i-event_subscription'></a>
+<div class='synopsis'>
+<span class='name'>event_subscription</span>
+<span class='arguments'>(event)</span>
+
+</div>
+<div class='description'>
+
+<p>Subscribes to an ActiveSupport event, leaving a breadcrumb when it triggers</p>
+
+<p>@api private @param event [Hash] details of the event to subscribe to</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-event_subscription-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-event_subscription-source'><span class="ruby-comment"># File lib/bugsnag/integrations/railtie.rb, line 76</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">event_subscription</span>(<span class="ruby-identifier">event</span>)&#x000A;  <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Notifications</span>.<span class="ruby-identifier">subscribe</span>(<span class="ruby-identifier">event</span>[<span class="ruby-value">:id</span>]) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-operator">*</span>, <span class="ruby-identifier">event_id</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">filtered_data</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">event</span>[<span class="ruby-value">:allowed_data</span>])&#x000A;    <span class="ruby-identifier">filtered_data</span>[<span class="ruby-value">:event_name</span>] = <span class="ruby-identifier">event</span>[<span class="ruby-value">:id</span>]&#x000A;    <span class="ruby-identifier">filtered_data</span>[<span class="ruby-value">:event_id</span>] = <span class="ruby-identifier">event_id</span>&#x000A;    <span class="ruby-keyword">if</span> <span class="ruby-identifier">event</span>[<span class="ruby-value">:id</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;sql.active_record&quot;</span>&#x000A;      <span class="ruby-identifier">binds</span> = <span class="ruby-identifier">data</span>[<span class="ruby-value">:binds</span>].<span class="ruby-identifier">each_with_object</span>({}) { <span class="ruby-operator">|</span><span class="ruby-identifier">bind</span>, <span class="ruby-identifier">output</span><span class="ruby-operator">|</span> <span class="ruby-identifier">output</span>[<span class="ruby-identifier">bind</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-string">&#39;?&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-identifier">bind</span>.<span class="ruby-identifier">name</span>) }&#x000A;      <span class="ruby-identifier">filtered_data</span>[<span class="ruby-value">:binds</span>] = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-identifier">binds</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">binds</span>.<span class="ruby-identifier">empty?</span>&#x000A;    <span class="ruby-keyword">end</span>&#x000A;    <span class="ruby-constant">Bugsnag</span>.<span class="ruby-identifier">leave_breadcrumb</span>(&#x000A;      <span class="ruby-identifier">event</span>[<span class="ruby-value">:message</span>],&#x000A;      <span class="ruby-identifier">filtered_data</span>,&#x000A;      <span class="ruby-identifier">event</span>[<span class="ruby-value">:type</span>],&#x000A;      <span class="ruby-value">:auto</span>&#x000A;    )&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
 </div>
 </div>
 </div>

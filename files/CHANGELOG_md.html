@@ -30,13 +30,85 @@ CHANGELOG.md
 </div>
 <div class='last-update'>
 Last Update:
-<span class='datetime'>2018-07-11 16:43:00 +0000</span>
+<span class='datetime'>2019-01-22 19:57:14 +0000</span>
 </div>
 </div>
 <div id='content'>
 <div id='text'>
 <div id='description'>
 <h1 id="label-Changelog">Changelog<span><a href="#label-Changelog">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<h2 id="label-6.11.1+-2822+Jan+2019-29">6.11.1 (22 Jan 2019)<span><a href="#label-6.11.1+-2822+Jan+2019-29">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<h3 id="label-Fixes">Fixes<span><a href="#label-Fixes">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<ul><li>
+<p>Fix issue with unnecessary meta_data being logged during breadcrumb
+validation.  | <a
+href="https://github.com/bugsnag/bugsnag-ruby/pull/530">#530</a></p>
+</li></ul>
+
+<h2 id="label-6.11.0+-2817+Jan+2019-29">6.11.0 (17 Jan 2019)<span><a href="#label-6.11.0+-2817+Jan+2019-29">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p><strong>Note</strong>: this release alters the behaviour of the notifier to
+track sessions automatically.</p>
+
+<h3 id="label-Enhancements">Enhancements<span><a href="#label-Enhancements">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<ul><li>
+<p>Added Breadcrumbs. Breadcrumbs allow you to track events that may have led
+up to an error, such as handled errors, page redirects, or SQL queries. For
+info on what is tracked and how you can customize the data that breadcrumbs
+collect, see the <a
+href="https://docs.bugsnag.com/platforms/ruby/other#logging-breadcrumbs">Logging
+breadcrumbs</a> section of our documentation.  | <a
+href="https://github.com/bugsnag/bugsnag-ruby/pull/525">#525</a></p>
+</li><li>
+<p><a href="../classes/Bugsnag.html">Bugsnag</a> will now capture
+automatically created sessions by default.  | <a
+href="https://github.com/bugsnag/bugsnag-ruby/pull/523">#523</a></p>
+</li></ul>
+
+<h3 id="label-Deprecated">Deprecated<span><a href="#label-Deprecated">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<ul><li>
+<p>The <code>endpoint</code> and <code>session_endpoint</code> configuration
+options are now deprecated but still supported. The <a
+href="https://docs.bugsnag.com/platforms/ruby/other/configuration-options#endpoints">set_endpoints</a>
+method should be used instead. Note that session tracking will be disabled
+if the notify endpoint is configured but the sessions endpoint is not -
+this is to avoid inadvertently sending session payloads to the wrong
+server.</p>
+</li></ul>
+
+<h2 id="label-6.10.0+-2805+Dec+2018-29">6.10.0 (05 Dec 2018)<span><a href="#label-6.10.0+-2805+Dec+2018-29">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<h3 id="label-Enhancements">Enhancements<span><a href="#label-Enhancements">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<ul><li>
+<p>Add SignalException to our default ignored classes  | <a
+href="https://github.com/bugsnag/bugsnag-ruby/pull/479">#479</a>  | <a
+href="https://github.com/tobyhs">Toby Hsieh</a></p>
+</li><li>
+<p>Include <a href="../classes/Bugsnag.html">Bugsnag</a> frames, marked out of
+project  | <a
+href="https://github.com/bugsnag/bugsnag-ruby/pull/497">#497</a></p>
+</li></ul>
+
+<h3 id="label-Fixes">Fixes<span><a href="#label-Fixes">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<ul><li>
+<p>Ensure Sidekiq request data is always attached to notifications  | <a
+href="https://github.com/bugsnag/bugsnag-ruby/pull/495">#495</a></p>
+</li></ul>
+
+<h2 id="label-6.9.0+-2812+Nov+2018-29">6.9.0 (12 Nov 2018)<span><a href="#label-6.9.0+-2812+Nov+2018-29">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<h3 id="label-Enhancements">Enhancements<span><a href="#label-Enhancements">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<ul><li>
+<p>Ensure the correct error handler is used in newer versions of Sidekiq  | <a
+href="https://github.com/bugsnag/bugsnag-ruby/pull/434">#434</a></p>
+</li><li>
+<p>Rewrite Delayed::Job integration to fix potential issues and add more 
+collected data  | <a
+href="https://github.com/bugsnag/bugsnag-ruby/pull/492">#492</a>  | <a
+href="https://github.com/snmaynard">Simon Maynard</a></p>
+</li></ul>
 
 <h2 id="label-6.8.0+-2811+Jul+2018-29">6.8.0 (11 Jul 2018)<span><a href="#label-6.8.0+-2811+Jul+2018-29">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
@@ -427,8 +499,7 @@ href="https://github.com/bugsnag/bugsnag-ruby/pull/324">#324</a></p>
 
 <h3 id="label-Bug+fixes">Bug fixes<span><a href="#label-Bug+fixes">&para;</a> <a href="#top">&uarr;</a></span></h3>
 <ul><li>
-<p>Show the job class name for <a href="../classes/Sidekiq.html">Sidekiq</a>
-jobs, not the wrapper class name  | <a
+<p>Show the job class name for Sidekiq jobs, not the wrapper class name  | <a
 href="https://github.com/snmaynard">Simon Maynard</a>  | <a
 href="https://github.com/bugsnag/bugsnag-ruby/pull/323">#323</a></p>
 </li></ul>
@@ -448,7 +519,7 @@ available on the object  | <a
 href="https://github.com/bugsnag/bugsnag-ruby/issues/318">#318</a>  | <a
 href="https://github.com/bugsnag/bugsnag-ruby/issues/311">#311</a></p>
 </li><li>
-<p><a href="../classes/Sidekiq.html">Sidekiq</a> improvements  | <a
+<p>Sidekiq improvements  | <a
 href="https://github.com/bugsnag/bugsnag-ruby/issues/317">#317</a>  | <a
 href="https://github.com/bugsnag/bugsnag-ruby/issues/282">#282</a>  | <a
 href="https://github.com/bugsnag/bugsnag-ruby/issues/309">#309</a>  | <a
@@ -478,8 +549,7 @@ href="https://github.com/bugsnag/bugsnag-ruby/pull/299">#299</a></p>
 
 <h3 id="label-Enhancements">Enhancements<span><a href="#label-Enhancements">&para;</a> <a href="#top">&uarr;</a></span></h3>
 <ul><li>
-<p>Add the name of the job class in context for <a
-href="../classes/Sidekiq.html">Sidekiq</a> and <a
+<p>Add the name of the job class in context for Sidekiq and <a
 href="../classes/Resque.html">Resque</a> errors  | <a
 href="https://github.com/johanlunds">Johan Lundström</a>  | <a
 href="https://github.com/bugsnag/bugsnag-ruby/pull/293">#293</a></p>
@@ -515,9 +585,8 @@ href="https://github.com/bugsnag/bugsnag-ruby/pull/291">#291</a></p>
 
 <h3 id="label-Fixes">Fixes<span><a href="#label-Fixes">&para;</a> <a href="#top">&uarr;</a></span></h3>
 <ul><li>
-<p>Fix <a href="../classes/Sidekiq.html">Sidekiq</a> app type being
-overwritten by Rails  | <a href="https://github.com/Draiken">Luiz Felipe G.
-Pereira</a>  | <a
+<p>Fix Sidekiq app type being overwritten by Rails  | <a
+href="https://github.com/Draiken">Luiz Felipe G. Pereira</a>  | <a
 href="https://github.com/bugsnag/bugsnag-ruby/pull/286">#286</a></p>
 </li><li>
 <p>Fix report uploads being rejected due to payload size  | <a
@@ -792,7 +861,7 @@ background thread.</p>
 <p>BREAKING: capistrano integration requires explicit configuration to avoid
 loading rails env (15x faster to notify)</p>
 </li><li>
-<p><a href="../classes/Sidekiq.html">Sidekiq</a> 3 support</p>
+<p>Sidekiq 3 support</p>
 </li><li>
 <p>java.lang.Throwable support for jruby</p>
 </li><li>
@@ -1116,7 +1185,7 @@ runs before initializers</p>
 <p>Added <a href="../classes/Bugsnag.html">Bugsnag</a> Middleware and
 callback, easier ways to add custom data to your exceptions</p>
 </li><li>
-<p>Added automatic <a href="../classes/Sidekiq.html">Sidekiq</a> integration</p>
+<p>Added automatic Sidekiq integration</p>
 </li><li>
 <p>Added automatic Devise integration</p>
 </li><li>
