@@ -10,7 +10,8 @@ module Bugsnag
         def deliver(url, body, configuration, options={})
           begin
             response = request(url, body, configuration, options)
-            configuration.debug("Request to #{url} completed, status: #{response.code}, payload size: #{body.bytesize}")
+            configuration.debug("Request to #{url} completed, status: #{response.code}")
+            configuration.debug("Payload: #{body}")
             if response.code[0] != "2"
               configuration.warn("Notifications to #{url} was reported unsuccessful with code #{response.code}")
             end
