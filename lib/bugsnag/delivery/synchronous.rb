@@ -12,6 +12,10 @@ module Bugsnag
             response = request(url, body, configuration, options)
             configuration.debug("Request to #{url} completed, status: #{response.code}")
             configuration.debug("Payload: #{body}")
+            configuration.debug("Proxy Host: #{configuration.proxy_host}")
+            configuration.debug("Headers: #{options[:headers]}")
+            configuration.debug("CA File: #{configuration.ca_file}")
+            configuration.debug("Timeout: #{configuration.timeout}")
             if response.code[0] != "2"
               configuration.warn("Notifications to #{url} was reported unsuccessful with code #{response.code}")
             end
